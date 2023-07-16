@@ -3,8 +3,8 @@
 ##variables
 command_output=$(df -h)
 partition_name=""
-total_partition_storage=""
-total_unused_partition_storage=""
+total_partition_storage=0
+total_unused_partition_storage=0
 
 ##script
 
