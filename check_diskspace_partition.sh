@@ -11,11 +11,9 @@ total_unused_partition_storage=""
 df -h | while IFS= read -r line; do
     partition_name=$(echo "$line" | awk '{print $1}')
     total_partition_storage=$(echo "$line" | awk '{print $5}' | sed 's/[^0-9]//g')
-    #echo "$total_partition_storage"
     if [ -n "$total_partition_storage" ]; then
         total_partition_storage=$(($total_partition_storage))
         total_unused_partition_storage=$((100 - $total_partition_storage))
-        #echo "total_partition_storage: $total_partition_storage"
         if [ $total_partition_storage -ge 50 ] && [ $total_partition_storage -lt 75 ]; then
             echo "[INFO] Partition: $partition_name has $total_unused_partition_storage% of freespace"
         elif [ $total_partition_storage -ge 75 ] && [ $total_partition_storage -lt 80 ]; then
