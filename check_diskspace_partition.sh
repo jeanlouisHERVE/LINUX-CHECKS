@@ -1,4 +1,27 @@
 #!/bin/bash
+
+##variables
+command_output=$(df -h)
+partition_name=""
+total_partition_storage=""
+total_unused_partition_storage=""
+
+##script
+df -h | while IFS= read -r line; do
+  partition_name=$(echo "$line" | awk '{print $1}')
+  echo "$partition_name"
+  total_used_storage=$(echo "$line" | awk '{print $5}'| sed 's/%//')
+  echo "$total_used_storage"
+done
+
+
+
+
+
+
+
+
+#!/bin/bash
 #Disk space monitoring script: Check disk usage for each partition and send alerts if it exceeds a certain threshold.
 
 #tmpfs              794M    1,7M  793M   1% /run
@@ -10,13 +33,13 @@
 #/dev/sr0 
 
 
-while IFS= read -r line; do
-    echo "$line"
+#while IFS= read -r line; do
+#    echo "$line"
     #partition_name=$($line | awk '{print $0}')
     #used_storage=$(df -h --total | grep "total" | awk '{print $5}'| sed 's/%//')
     #used_storage=$(($used_storage))
     #echo "$partition_name uses $used_storage% of its partition"
-done < <(df -h)
+#done < <(df -h)
 
 
 
