@@ -7,21 +7,25 @@ total_partition_storage=""
 total_unused_partition_storage=""
 
 ##script
+
 df -h | while IFS= read -r line; do
     partition_name=$(echo "$line" | awk '{print $1}')
-    total_used_storage=$(echo "$line" | awk '{print $5}'| sed 's/[^0-9]//g')
-
-    if [ -n $total_used_storage ]; then
-        total_unused_partition_storage=$((100 - total_used_storage))
-        echo "$total_unused_partition_storage"
-    echo "***$partition_name*** has $total_unused_partition_storage% of free space"
+    total_partition_storage=$(echo "$line" | awk '{print $5}' | sed 's/[^0-9]//g')
+    #echo "$total_partition_storage"
+    if [ -n "$total_partition_storage" ]; then
+        total_partition_storage=$(($total_partition_storage))
+        total_unused_partition_storage=$((100 - $total_partition_storage))
+        #echo "total_partition_storage: $total_partition_storage"
+        if [ $total_partition_storage -ge 50 ] && [ $total_partition_storage -lt 75 ]; then
+            echo "[INFO] Partition: $partition_name has $total_unused_partition_storage% of freespace"
+        elif [ $total_partition_storage -ge 75 ] && [ $total_partition_storage -lt 80 ]; then
+            echo "[WARNING] Partition: $partition_name has $total_unused_partition_storage% of freespace"
+        elif [ $total_partition_storage -ge 80 ]; then
+            echo "[DANGER] Partition: $partition_name has $total_unused_partition_storage% of freespace"
+        else
+            echo "[INFO] Partition: $partition_name has $total_unused_partition_storage% of freespace"
+        fi
     fi
-
-  #total_used_storage=$(($total_used_storage))
-  #echo "$total_used_storage"
-  #total_unused_partition_storage=$((100-$total_used_storage))
-  #echo "$total_unused_partition_storage"
-  #echo "***$partition_name*** has $total_unused_partition_storage% of free space"
 done
 
 
@@ -61,13 +65,13 @@ done
 #echo "$partition_name uses $used_storage% of its partition"
 
 #the total amount of unused diskspace
-#total_unused_storage=$((100-$total_used_storage))
+#total_unused_storage=$((100-$total_partition_storage))
 #echo "The percentage of total unused storage : $total_unused_storage%"
 
-#if [ $total_used_storage -gt 50 ]; then
+#if [ $total_partition_storage -gt 50 ]; then
 #    echo "[INFO] At least half of the allocated space is used"
-#elif [ $total_used_storage -gt 75 ]; then
+#elif [ $total_partition_storage -gt 75 ]; then
 #    echo "[WARNING] At least 75% of the allocated space is used"
-#elif [ $total_used_storage -gt 75 ]; then
+#elif [ $total_partition_storage -gt 75 ]; then
 #    echo "[DANGER] At least 80% of the allocated space is used"
 #fi
