@@ -8,10 +8,20 @@ total_unused_partition_storage=""
 
 ##script
 df -h | while IFS= read -r line; do
-  partition_name=$(echo "$line" | awk '{print $1}')
-  echo "$partition_name"
-  total_used_storage=$(echo "$line" | awk '{print $5}'| sed 's/%//')
-  echo "$total_used_storage"
+    partition_name=$(echo "$line" | awk '{print $1}')
+    total_used_storage=$(echo "$line" | awk '{print $5}'| sed 's/[^0-9]//g')
+
+    if [ -n $total_used_storage ]; then
+        total_unused_partition_storage=$((100 - total_used_storage))
+        echo "$total_unused_partition_storage"
+    echo "***$partition_name*** has $total_unused_partition_storage% of free space"
+    fi
+
+  #total_used_storage=$(($total_used_storage))
+  #echo "$total_used_storage"
+  #total_unused_partition_storage=$((100-$total_used_storage))
+  #echo "$total_unused_partition_storage"
+  #echo "***$partition_name*** has $total_unused_partition_storage% of free space"
 done
 
 
