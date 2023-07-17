@@ -11,11 +11,15 @@ if [ -n "$total_memory_space" ] && [ -n "$free_memory_space" ]; then
     #echo "$percentage_free_memory_space%"
     if [ $percentage_free_memory_space -ge 50 ] && [ $percentage_free_memory_space -lt 75 ]; then
         echo "[INFO] >> memory << has $percentage_free_memory_space% of freespace"
+        exit 0    
     elif [ $percentage_free_memory_space -ge 75 ] && [ $percentage_free_memory_space -lt 80 ]; then
         echo "[WARNING] >> memory << has $percentage_free_memory_space% of freespace"
+        exit 0   
     elif [ $percentage_free_memory_space -ge 80 ]; then
         echo "[DANGER]  >> memory << has $percentage_free_memory_space% of freespace"
+        exit 1  
     else
         echo "[INFO]    >> memory << has $percentage_free_memory_space% of freespace"
+        exit 0
     fi
 fi

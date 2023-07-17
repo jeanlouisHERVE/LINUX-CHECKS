@@ -14,3 +14,9 @@ bats_require_minimum_version 1.5.0
   echo "$status"
   [ "$status" -eq 0 ]
 }
+
+@test "memory" {
+  run ./check_memory.sh
+  echo "$status"
+  [ "$status" -eq 0 ]
+}

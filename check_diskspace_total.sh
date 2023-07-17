@@ -19,7 +19,6 @@ percentage_total_unused_storage=$((100 - $percentage_total_used_storage))
 #the total amount of unused diskspace
 size_total_unused_storage=$(df -h --total | grep "total" | awk '{print $4}'| sed 's/G//')
 #echo "The size of total unused storage : $size_total_unused_storage%"
-percentage_total_used_storage=76
 
 if [ -n "$percentage_total_used_storage" ] && [ -n "$percentage_total_unused_storage" ]; then
     if [ $percentage_total_used_storage -ge 50 ] && [ $percentage_total_used_storage -lt 75 ]; then
