@@ -10,6 +10,7 @@ bats_require_minimum_version 1.5.0
 
 # Test script 1
 @test "diskspace_total" {
-  run -127 diskspace_total.sh
+  run ./diskspace_total.sh
+  echo "$status"
   [ "$status" -eq 0 ]
 }
