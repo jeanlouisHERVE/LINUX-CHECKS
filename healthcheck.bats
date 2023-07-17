@@ -8,6 +8,9 @@ bats_require_minimum_version 1.5.0
 #cd bats-core
 #./install.sh /usr/local
 
+##TO DO 
+#add alias to run healthcheck
+
 # Test script 1
 @test "diskspace_total" {
   run ./check_diskspace_total.sh
