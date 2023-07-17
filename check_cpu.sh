@@ -1,3 +1,4 @@
+#!/bin/bash
 #CPU load monitoring script: Monitor CPU usage and notify if it reaches a critical level.
 
 # CPU Usage: Monitor the overall CPU usage to understand its workload. You can use tools like top, htop, or glances 

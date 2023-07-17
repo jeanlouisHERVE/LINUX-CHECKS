@@ -1,3 +1,4 @@
+#!/bin/bash
 #Disk space monitoring script: Check disk usage and send alerts if it exceeds a certain threshold.
 
 ##variables
@@ -23,11 +24,15 @@ size_total_unused_storage=$(df -h --total | grep "total" | awk '{print $4}'| sed
 if [ -n "$percentage_total_used_storage" ] && [ -n "$percentage_total_unused_storage" ]; then
     if [ $percentage_total_unused_storage -ge 50 ] && [ $percentage_total_unused_storage -lt 75 ]; then
         echo "[INFO]    >> Diskspace << has $percentage_total_unused_storage% of freespace"
+        exit 0
     elif [ $percentage_total_unused_storage -ge 75 ] && [ $percentage_total_unused_storage -lt 80 ]; then
         echo "[WARNING] >> Diskspace << has $percentage_total_unused_storage% of freespace"
+        exit 0
     elif [ $percentage_total_unused_storage -ge 80 ]; then
         echo "[DANGER]  >> Diskspace << has $percentage_total_unused_storage% of freespace"
+        exit 1
     else
         echo "[INFO]    >> Diskspace << has $percentage_total_unused_storage% of freespace ($size_total_unused_storage"G")"
+        exit 0
     fi
 fi
