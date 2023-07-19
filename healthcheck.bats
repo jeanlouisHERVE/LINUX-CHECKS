@@ -23,3 +23,9 @@ bats_require_minimum_version 1.5.0
   echo "$status"
   [ "$status" -eq 0 ]
 }
+
+@test "users" {
+  run ./02_check_user.sh
+  echo "$status"
+  [ "$status" -eq 0 ]
+}
