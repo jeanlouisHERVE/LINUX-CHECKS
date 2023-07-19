@@ -13,13 +13,13 @@ bats_require_minimum_version 1.5.0
 
 # Test script 1
 @test "diskspace_total" {
-  run ./check_diskspace_total.sh
+  run ./00_check_diskspace_total.sh
   echo "$status"
   [ "$status" -eq 0 ]
 }
 
 @test "memory" {
-  run ./check_memory.sh
+  run ./01_check_memory.sh
   echo "$status"
   [ "$status" -eq 0 ]
 }
