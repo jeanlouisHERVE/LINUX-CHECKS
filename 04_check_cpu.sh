@@ -25,10 +25,10 @@ display_cpu_frequency() {
     max_frequency=$(( $get_max_frequency ))
     
     ###installation of cpufrequtils
-    actual_frequency=0  ### to define 
+    total_actual_frequency=0  ### to define 
 
-    if [ -n "$max_frequency" ] && [ -n "$actual_frequency" ]; then
-    percentage_actual_cpu=$(($actual_frequency * 100 / $max_frequency))
+    if [ -n "$max_frequency" ] && [ -n "$total_actual_frequency" ]; then
+    percentage_actual_cpu=$(($total_actual_frequency * 100 / $max_frequency))
     #echo "percentage_actual_cpu, $percentage_actual_cpu%"
     if [ $percentage_actual_cpu -ge 50 ] && [ $percentage_actual_cpu -lt 75 ]; then
         echo "[INFO]    >> cpu << uses $percentage_actual_cpu% of its capacity"
@@ -108,7 +108,7 @@ for process in $process_list:
     else
         echo "Process '$process' is not running."
     fi
-   
+
 
 
 # Main script
