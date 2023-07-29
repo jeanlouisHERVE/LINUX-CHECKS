@@ -21,8 +21,9 @@ check_cpu_usage() {
 #  frequency scaling.
 display_cpu_frequency() {
     echo "CPU Frequency and Scaling:"
-    lscpu
-    # Alternative: lscpu | grep "CPU MHz"
+    
+    max_frequency=$(lscpu | grep "CPU MHz" | sed 's/MHz//')
+    actual_frequency=0
 }
 
 
