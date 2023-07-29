@@ -90,12 +90,20 @@ display_cpu_performance_counters() {
 }
 # CPU Affinity: Explore CPU affinity settings to control which CPUs are utilized by specific processes or threads.
 # The taskset command allows you to assign or query CPU affinity for a given process.
-display_cpu_affinity() {
-    echo "CPU Affinity:"
+process_list=["",""]
+
+display_cpu_affinity(process_name) {
+    echo "CPU Affinity for $process_name:"
+    process_pid=$(ps -e | grep $process_name | awk '{print $1}')
+
     # Replace 'YOUR_PROCESS_PID' with the PID of the process you want to query or modify CPU affinity for.
     # For example, 'taskset -p 1234' to get the current affinity or 'taskset -c 0-3 1234' to set affinity to CPUs 0 to 3.
-    taskset -p YOUR_PROCESS_PID
+    taskset -p $process_pid
 }
+
+for process in $process_list:
+    display_cpu_affinity
+
 
 # Main script
 check_cpu_usage
