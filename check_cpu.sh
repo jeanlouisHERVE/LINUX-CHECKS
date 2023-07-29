@@ -98,11 +98,12 @@ display_cpu_affinity(process_name) {
 
     # Replace 'YOUR_PROCESS_PID' with the PID of the process you want to query or modify CPU affinity for.
     # For example, 'taskset -p 1234' to get the current affinity or 'taskset -c 0-3 1234' to set affinity to CPUs 0 to 3.
-    taskset -p $process_pid
+    current_affinity=$(taskset -p $process_pid)
+    echo "Current CPU Affinity for Process $process_name with pid $process_pid: $current_affinity"
 }
 
 for process in $process_list:
-    display_cpu_affinity
+    display_cpu_affinity($process)
 
 
 # Main script
