@@ -37,7 +37,7 @@ analyze_logs_with_sudo() {
     echo "--------------------------"
     grep "ERROR:" "$LOG_FILE" | cut -d ":" -f 3- | sort | uniq -c | sort -nr | head -n 5
 
-    if [[ $count_error -gt 0 ]]; then
+    if [ $count_error -gt 0 ]; then
         exit 1 
 }
 
