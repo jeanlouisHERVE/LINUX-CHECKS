@@ -32,10 +32,13 @@ analyze_logs_with_sudo() {
     echo "ERROR count: $count_error"
     echo
 
-    # Extract the most common error messages (assuming ERROR logs start with "ERROR:")
+    # Extract the most common error messages (assuming ERROR logs start with "ERROR:") ==> to adapt
     echo "Most common ERROR messages:"
     echo "--------------------------"
     grep "ERROR:" "$LOG_FILE" | cut -d ":" -f 3- | sort | uniq -c | sort -nr | head -n 5
+
+    if [[ $count_error -gt 0 ]]; then
+        exit 1 
 }
 
 # Check if running with sudo (elevated privileges)
@@ -45,5 +48,5 @@ if [[ $EUID -eq 0 ]]; then
 else
     # If not running with sudo, request password and run the script with sudo
     sudo_prompt
-    sudo bash -c "$(declare -f analyze_logs_with_sudo); analyze_logs_with_sudo"
+    sudo bash -c "$(declare -f analyze_logs_with_sudo); analyze_logs_with_sudo
 fi
