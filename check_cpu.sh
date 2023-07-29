@@ -21,9 +21,32 @@ check_cpu_usage() {
 #  frequency scaling.
 display_cpu_frequency() {
     echo "CPU Frequency and Scaling:"
+    get_max_frequency=$( lscpu | grep "CPU MHz" | sed 's/MHz//' )
+    max_frequency=$(( $get_max_frequency ))
     
-    max_frequency=$(lscpu | grep "CPU MHz" | sed 's/MHz//')
+    ###installation of cpufrequtils
     actual_frequency=0
+
+    if [ -n "$max_frequency" ] && [ -n "$actual_frequency" ]; then
+    percentage_actual_cpu=$(($actual_frequency * 100 / $max_frequency))
+    #echo "percentage_actual_cpu, $percentage_actual_cpu%"
+    if [ $percentage_free_memory_space -ge 50 ] && [ $percentage_free_memory_space -lt 75 ]; then
+        echo "[INFO] >> cpu << uses $percentage_actual_cpu% of its capacity"
+        exit 0    
+    elif [ $percentage_free_memory_space -ge 75 ] && [ $percentage_free_memory_space -lt 80 ]; then
+        echo "[WARNING] >> cpu << uses $percentage_actual_cpu% of its capacity"
+        exit 0   
+    elif [ $percentage_free_memory_space -ge 80 ]; then
+        echo "[DANGER]  >> cpu << uses $percentage_actual_cpu% of its capacity"
+        exit 1  
+    else
+        echo "[INFO]    >> cpu << uses $percentage_actual_cpu% of its capacity"
+        exit 0
+    fi
+fi
+
+
+
 }
 
 
