@@ -25,18 +25,18 @@ display_cpu_frequency() {
     max_frequency=$(( $get_max_frequency ))
     
     ###installation of cpufrequtils
-    actual_frequency=0
+    actual_frequency=0  ### to define 
 
     if [ -n "$max_frequency" ] && [ -n "$actual_frequency" ]; then
     percentage_actual_cpu=$(($actual_frequency * 100 / $max_frequency))
     #echo "percentage_actual_cpu, $percentage_actual_cpu%"
-    if [ $percentage_free_memory_space -ge 50 ] && [ $percentage_free_memory_space -lt 75 ]; then
+    if [ $percentage_actual_cpu -ge 50 ] && [ $percentage_actual_cpu -lt 75 ]; then
         echo "[INFO] >> cpu << uses $percentage_actual_cpu% of its capacity"
         exit 0    
-    elif [ $percentage_free_memory_space -ge 75 ] && [ $percentage_free_memory_space -lt 80 ]; then
+    elif [ $percentage_actual_cpu -ge 75 ] && [ $percentage_actual_cpu -lt 80 ]; then
         echo "[WARNING] >> cpu << uses $percentage_actual_cpu% of its capacity"
         exit 0   
-    elif [ $percentage_free_memory_space -ge 80 ]; then
+    elif [ $percentage_actual_cpu -ge 80 ]; then
         echo "[DANGER]  >> cpu << uses $percentage_actual_cpu% of its capacity"
         exit 1  
     else
@@ -44,9 +44,6 @@ display_cpu_frequency() {
         exit 0
     fi
 fi
-
-
-
 }
 
 
