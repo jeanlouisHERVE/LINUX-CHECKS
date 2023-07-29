@@ -102,7 +102,13 @@ display_cpu_affinity(process_name) {
     echo "[INFO]    >> cpu affinity : $process_name << pid $process_pid: $current_affinity"
 }
 for process in $process_list:
-    display_cpu_affinity($process)
+    if pgrep -x "$process" > /dev/null; then
+        echo "Process '$process' is running."
+        display_cpu_affinity($process)
+    else
+        echo "Process '$process' is not running."
+    fi
+   
 
 
 # Main script
@@ -113,4 +119,3 @@ display_cpu_model_and_features
 display_cpu_load_average
 display_interrupts_and_context_switches
 display_cpu_performance_counters
-display_cpu_affinity
