@@ -31,7 +31,7 @@ display_cpu_frequency() {
     percentage_actual_cpu=$(($actual_frequency * 100 / $max_frequency))
     #echo "percentage_actual_cpu, $percentage_actual_cpu%"
     if [ $percentage_actual_cpu -ge 50 ] && [ $percentage_actual_cpu -lt 75 ]; then
-        echo "[INFO] >> cpu << uses $percentage_actual_cpu% of its capacity"
+        echo "[INFO]    >> cpu << uses $percentage_actual_cpu% of its capacity"
         exit 0    
     elif [ $percentage_actual_cpu -ge 75 ] && [ $percentage_actual_cpu -lt 80 ]; then
         echo "[WARNING] >> cpu << uses $percentage_actual_cpu% of its capacity"
@@ -99,9 +99,8 @@ display_cpu_affinity(process_name) {
     # Replace 'YOUR_PROCESS_PID' with the PID of the process you want to query or modify CPU affinity for.
     # For example, 'taskset -p 1234' to get the current affinity or 'taskset -c 0-3 1234' to set affinity to CPUs 0 to 3.
     current_affinity=$(taskset -p $process_pid)
-    echo "Current CPU Affinity for Process $process_name with pid $process_pid: $current_affinity"
+    echo "[INFO]    >> cpu affinity : $process_name << pid $process_pid: $current_affinity"
 }
-
 for process in $process_list:
     display_cpu_affinity($process)
 
