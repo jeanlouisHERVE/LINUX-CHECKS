@@ -8,7 +8,7 @@ check_cpu_usage() {
     cpu_usage=${cpu_usage%.*}  # Remove decimal part
 
     if [ "$cpu_usage" -ge "$critical_level" ]; then
-        echo "WARNING: CPU usage is at ${cpu_usage}%!"
+        echo "[DANGER]  >> cpu usage << is at ${cpu_usage}%!"
         # You can add notification commands here, e.g., sending an email, displaying a desktop notification, etc.
     fi
 }
@@ -108,7 +108,6 @@ for process in $process_list:
     else
         echo "Process '$process' is not running."
     fi
-
 
 
 # Main script
