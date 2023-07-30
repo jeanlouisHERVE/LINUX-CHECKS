@@ -27,7 +27,7 @@ check_application_response_time(app_url):
     while true; do
         response_time=$(curl -o /dev/null -s -w "%{time_total}\n" "$app_url")
         echo "Response Time: ${response_time} seconds"
-        ###add check regarding the response time
+        ###add check regarding the response time check
     done
 
 
