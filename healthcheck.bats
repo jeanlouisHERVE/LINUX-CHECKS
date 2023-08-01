@@ -28,6 +28,34 @@ check_cpu_usage() {
     fi
 }
 
+display_cpu_frequency() {
+    echo "CPU Frequency and Scaling:"
+    get_max_frequency=$( lscpu | grep "CPU MHz" | sed 's/MHz//' )
+    max_frequency=$(( $get_max_frequency ))
+    
+    ###installation of cpufrequtils
+    #sudo apt-get install cpufrequtils
+    total_actual_frequency=0  ### to define 
+
+    if [ -n "$max_frequency" ] && [ -n "$total_actual_frequency" ]; then
+    percentage_actual_cpu=$(($total_actual_frequency * 100 / $max_frequency))
+    #echo "percentage_actual_cpu, $percentage_actual_cpu%"
+    if [ $percentage_actual_cpu -ge 50 ] && [ $percentage_actual_cpu -lt 75 ]; then
+        echo "[INFO]    >> cpu << uses $percentage_actual_cpu% of its capacity"
+        exit 0    
+    elif [ $percentage_actual_cpu -ge 75 ] && [ $percentage_actual_cpu -lt 80 ]; then
+        echo "[WARNING] >> cpu << uses $percentage_actual_cpu% of its capacity"
+        exit 0   
+    elif [ $percentage_actual_cpu -ge 80 ]; then
+        echo "[DANGER]  >> cpu << uses $percentage_actual_cpu% of its capacity"
+        exit 1  
+    else
+        echo "[INFO]    >> cpu << uses $percentage_actual_cpu% of its capacity"
+        exit 0
+    fi
+fi
+}
+
 # Test scripts
 @test "diskspace_total" {
   run ./00_check_diskspace_total.sh
@@ -53,5 +81,3 @@ check_cpu_usage() {
   [ "$result" -eq 0 ]
 }
 
-# This will run all the test cases
-run bats my_script_test.bats
