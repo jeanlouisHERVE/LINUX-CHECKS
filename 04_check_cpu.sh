@@ -9,7 +9,10 @@ check_cpu_usage() {
 
     if [ "$cpu_usage" -ge "$critical_level" ]; then
         echo "[DANGER]  >> cpu usage << is at ${cpu_usage}%!"
+        exit 1
         # You can add notification commands here, e.g., sending an email, displaying a desktop notification, etc.
+    else
+        exit 0
     fi
 }
 # CPU Usage: Monitor the overall CPU usage to understand its workload. You can use tools like top, htop, or glances 

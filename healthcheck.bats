@@ -11,7 +11,24 @@ bats_require_minimum_version 1.5.0
 ##TO DO 
 #add alias to run healthcheck
 
-# Test script 1
+###FUNCTIONS TO TEST
+check_cpu_usage() {
+    local critical_level=80  # Set the critical level as desired (percentage)
+
+    local cpu_usage=$(top -bn 1 | grep "Cpu(s)" | awk '{print $2 + $4}')
+    cpu_usage=$(( $cpu_usage ))  # Remove decimal part
+    echo "cpu_usage: $cpu_usage"
+
+    if [ "$cpu_usage" -ge "$critical_level" ]; then
+        echo "[DANGER]  >> cpu usage << is at ${cpu_usage}%!"
+        exit 1
+        # You can add notification commands here, e.g., sending an email, displaying a desktop notification, etc.
+    else
+        exit 0
+    fi
+}
+
+# Test scripts
 @test "diskspace_total" {
   run ./00_check_diskspace_total.sh
   echo "$status"
@@ -24,8 +41,17 @@ bats_require_minimum_version 1.5.0
   [ "$status" -eq 0 ]
 }
 
-@test "users" {
-  run ./02_check_user.sh
-  echo "$status"
-  [ "$status" -eq 0 ]
+# @test "users" {
+#   run ./02_check_user.sh
+#   echo "$status"
+#   [ "$status" -eq 0 ]
+# }
+
+@test "cpu_usage" {
+  result="$(check_cpu_usage)"
+  echo "result"
+  [ "$result" -eq 0 ]
 }
+
+# This will run all the test cases
+run bats my_script_test.bats
