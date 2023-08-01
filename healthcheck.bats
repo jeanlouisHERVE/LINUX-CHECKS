@@ -48,7 +48,7 @@ check_cpu_usage() {
 # }
 
 @test "cpu_usage" {
-  result="$(check_cpu_usage)"
+  result="$(( check_cpu_usage ))"
   echo "result"
   [ "$result" -eq 0 ]
 }
