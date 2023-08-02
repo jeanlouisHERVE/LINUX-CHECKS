@@ -15,12 +15,16 @@ df -h | while IFS= read -r line; do
         total_unused_partition_storage=$((100 - $total_partition_storage))
         if [ $total_partition_storage -ge 50 ] && [ $total_partition_storage -lt 75 ]; then
             echo "[INFO] >> $partition_name << has $total_unused_partition_storage% of freespace"
+            exit 0
         elif [ $total_partition_storage -ge 75 ] && [ $total_partition_storage -lt 80 ]; then
             echo "[WARNING] >> $partition_name << has $total_unused_partition_storage% of freespace"
+            exit 0
         elif [ $total_partition_storage -ge 80 ]; then
             echo "[DANGER]  >> $partition_name << has $total_unused_partition_storage% of freespace"
+            exit 1
         else
             echo "[INFO]    >> $partition_name << has $total_unused_partition_storage% of freespace"
+            exit 0
         fi
     fi
 done
