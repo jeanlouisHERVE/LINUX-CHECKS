@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##variables
-command_output=$(df -h)
+command_output=$(df -P | awk '!/\/dev\/sr0/')
 partition_name=""
 total_partition_storage=0
 total_unused_partition_storage=0
@@ -10,6 +10,8 @@ cr=0
 
 df -h | while IFS= read -r line; do
     partition_name=$(echo "$line" | awk '{print $1}')
+
+    #check state for each partition
     total_partition_storage=$(echo "$line" | awk '{print $5}' | sed 's/[^0-9]//g')
     if [ -n "$total_partition_storage" ]; then
         total_unused_partition_storage=$((100 - $total_partition_storage))

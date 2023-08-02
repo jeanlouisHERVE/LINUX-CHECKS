@@ -63,6 +63,12 @@ fi
   [ "$status" -eq 0 ]
 }
 
+@test "diskspace_partition" {
+  run ./06_check_diskspace_partition.sh
+  echo "$status"
+  [ "$status" -eq 0 ]
+}
+
 @test "memory" {
   run ./01_check_memory.sh
   echo "$status"
