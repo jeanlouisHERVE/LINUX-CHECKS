@@ -6,8 +6,8 @@ partition_name=""
 total_partition_storage=0
 total_unused_partition_storage=0
 cr=0
-##script
 
+##script
 $command_output| head -1 | while IFS= read -r line; do
     partition_name=$(echo "$line" | awk '{print $1}')
 
@@ -42,7 +42,7 @@ fi
 
 
 
-
+#=> df -P | awk '!/\/dev\/sr0/'
 #!/bin/bash
 #Disk space monitoring script: Check disk usage for each partition and send alerts if it exceeds a certain threshold.
 
