@@ -8,7 +8,7 @@ total_unused_partition_storage=0
 cr=0
 ##script
 
-df -h | while IFS= read -r line; do
+$command_output| head -1 | while IFS= read -r line; do
     partition_name=$(echo "$line" | awk '{print $1}')
 
     #check state for each partition
@@ -31,7 +31,7 @@ df -h | while IFS= read -r line; do
     fi
 done
 
-if [[ $cr == 1 ]]; then 
+if [ $cr -eq 1 ]; then 
     exit 1
 else 
     exit 0
