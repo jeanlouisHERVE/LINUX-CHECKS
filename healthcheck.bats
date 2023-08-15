@@ -87,3 +87,9 @@ fi
   [ "$result" -eq 0 ]
 }
 
+@test "cpu_frequency" {
+  result="$(( check_cpu_frequency ))"
+  echo "result"
+  [ "$result" -eq 0 ]
+}
+

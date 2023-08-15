@@ -25,16 +25,16 @@ echo "$command_output" | tail -n +2 | while IFS= read -r line; do
     if [ -n "$total_partition_storage" ]; then
         total_unused_partition_storage=$((100 - $total_partition_storage))
         if [ $total_partition_storage -ge 50 ] && [ $total_partition_storage -lt 75 ]; then
-            echo "[INFO] >> $partition_name << has $total_unused_partition_storage% of freespace"
+            #echo "[INFO] >> $partition_name << has $total_unused_partition_storage% of freespace"
             cr=0
         elif [ $total_partition_storage -ge 75 ] && [ $total_partition_storage -lt 80 ]; then
-            echo "[WARNING] >> $partition_name << has $total_unused_partition_storage% of freespace"
+            #echo "[WARNING] >> $partition_name << has $total_unused_partition_storage% of freespace"
             cr=0
         elif [ $total_partition_storage -ge 80 ]; then
-            echo "[DANGER]  >> $partition_name << has $total_unused_partition_storage% of freespace"
+            #echo "[DANGER]  >> $partition_name << has $total_unused_partition_storage% of freespace"
             cr=1
         else
-            echo "[INFO]    >> $partition_name << has $total_unused_partition_storage% of freespace"
+            #echo "[INFO]    >> $partition_name << has $total_unused_partition_storage% of freespace"
             cr=0
         fi
     fi
